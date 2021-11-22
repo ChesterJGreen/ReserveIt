@@ -6,17 +6,15 @@ using ReserveIt.Enums;
 
 namespace ReserveIt.Models
 {
-    public class ConfereneceRoom
+    public class ConfereneceRoom : Resource
     {
-        public int ID { get; set; }
         public string Name { get; set; }
-        public string Location { get; set; }
-        public VenueTimeZone TimeZone{ get; set; }
         public List<TimeSlot> TimeSlots { get; set; }
 
         public class TimeSlot { 
             public string Name { get; set; }
-            public int Time { get; set; }
+            public DateTime StartDateTime { get; set; }
+            public DateTime EndDateTime { get; set; }
         }
         
     }
