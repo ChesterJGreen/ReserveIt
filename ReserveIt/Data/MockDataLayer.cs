@@ -63,5 +63,12 @@ namespace ReserveIt.Data
             };
             return result;
         }
+        public Task<ConferenceRoom> CreateConferenceRoom(newConferenceRoom)
+        {
+            List<ConferenceRoom> result = new List<ConferenceRoom>();
+            result.Add(new ConferenceRoom(newConferenceRoom));
+            return result;
+        }
+        
     }
 }

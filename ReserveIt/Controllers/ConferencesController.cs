@@ -28,7 +28,40 @@ namespace ReserveIt.Controllers
             return new JsonResult(reservationToReturn);
 
 
-        }        
+        }
+        [HttpPost]
+        public async Task<JsonResult> CreateConferenceRoom([FromBody] ConferenceRoom conferenceRoom)
+        {
+
+            try
+            {
+                ConferenceRoom toBeCreated = await Data.MockDataLayer.CreateConferenceRoom(conferenceRoom);
+                return new JsonResult(toBeCreated);
+            }
+            catch (Exception ex)
+            {
+
+                return new JsonResult(BadRequest(ex));
+            }
+        }
+        [HttpPut("{id}")]
+        public async Task<JsonResult> EditConferenceRoom(int id, [FromBody] ConferenceRoom venue)
+        {
+            try
+            {
+                var rooms = Data.MockDataLayer.GetConferenceRooms();
+                var roomInQuestion = rooms.SingleOrDefault(x => x.Id == id);
+                if (roomInQuestion == null)
+                    return new JsonResult("Room is either not available or non-existant") { StatusCode = 404 };
+                ConferenceRoom conferenceRoomToEdit = await Data.MockDataLayer.EditConferenceRoom(venue);
+                return new JsonResult(conferenceRoomToEdit);
+            }
+            catch (Exception ex)
+            {
+
+                return new JsonResult(BadRequest(ex));
+            }
+        }
     }
 
 }
