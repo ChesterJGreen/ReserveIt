@@ -8,8 +8,10 @@ namespace ReserveIt.Models
 {
     public abstract class Resource
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
         public string Location { get; set; }
-        public VenueTimeZone VenueTimeZone { get; set; }
+        public ResourceTimeZone ResourceTimeZone { get; set; }
+        public virtual IEnumerable<Reservation> Reservations { get; set; }
     }
 }

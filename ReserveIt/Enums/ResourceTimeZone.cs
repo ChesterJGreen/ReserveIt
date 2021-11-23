@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ReserveIt.Enums
 {
-    public enum VenueTimeZone
+    public enum ResourceTimeZone
     {
         PST,
         MST,
