@@ -28,8 +28,7 @@ namespace ReserveIt.Controllers
             return new JsonResult(reservationToReturn);
 
 
-        }
-        
+        }        
     }
 
 }

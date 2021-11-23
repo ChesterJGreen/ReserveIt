@@ -14,21 +14,21 @@ namespace ReserveIt.Data
             List<ConferenceRoom> result = new List<ConferenceRoom>();
             result.Add(
                 new ConferenceRoom()
-            
-            {
-                Id = 1,
-                BuildingName = "Nampa Public Library",
-                Name = "Lecture Hall",
-                Location = "Nampa",
-                AvailableLectureDevices = {
+
+                {
+                    Id = 1,
+                    BuildingName = "Nampa Public Library",
+                    Name = "Lecture Hall",
+                    Location = "Nampa",
+                    AvailableLectureDevices = new AssisstedLectureDevices[] {
                     AssisstedLectureDevices.projector,
                     AssisstedLectureDevices.microphone,
                     AssisstedLectureDevices.podium
                 },
-                ResourceTimeZone = ResourceTimeZone.MST,
-                SeatingProvided = 50
+                    ResourceTimeZone = ResourceTimeZone.MST,
+                    SeatingProvided = 50
 
-            });
+                }) ;
             result.Add(
                 new ConferenceRoom()
             {
@@ -37,7 +37,7 @@ namespace ReserveIt.Data
                 BuildingName = "Stella's",
                 Name = "Outdoor Patio",
                 Location = "Down-Town Nampa",
-                AvailableLectureDevices =
+                AvailableLectureDevices = new AssisstedLectureDevices[]
                 {
                     AssisstedLectureDevices.speakers,
                     AssisstedLectureDevices.microphone

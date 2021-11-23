@@ -10,7 +10,7 @@ namespace ReserveIt.Models
     {
         public string BuildingName { get; set; }
         public int SeatingProvided { get; set; }
-        public List<AssisstedLectureDevices> AvailableLectureDevices { get; set; }
+        public IEnumerable<AssisstedLectureDevices> AvailableLectureDevices { get; set; }
         
 
 
