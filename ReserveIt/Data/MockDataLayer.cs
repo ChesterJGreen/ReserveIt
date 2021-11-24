@@ -62,13 +62,16 @@ namespace ReserveIt.Data
                 EndDateTime = DateTime.Now.AddHours(+1)
             };
         }
+
+       
+
         public static List<ConferenceRoom> GetConferenceRooms()
         {
             
             return result;
         }
         //TODO make the mockDataLayer process the Create/Put/Delete functionality
-        public static async Task<ConferenceRoom> CreateConferenceRoom(ConferenceRoom newConferenceRoom)
+        public static Task<ConferenceRoom> CreateConferenceRoom(ConferenceRoom newConferenceRoom)
         {
             var resultForId = result.ToArray();
             int maxId = 0;
@@ -97,8 +100,16 @@ namespace ReserveIt.Data
                     SeatingProvided = newConferenceRoom.SeatingProvided
 
                 }) ;
-            return result.Single(room => room.Id == maxId);
+            return Task.FromResult(result.Single(room => room.Id == maxId));
         }
-        
+        internal static Task<ConferenceRoom> EditConferenceRoom(int id, ConferenceRoom venue)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static Task<ConferenceRoom> DeleteConferenceRoom(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

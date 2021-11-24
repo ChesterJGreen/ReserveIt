@@ -13,10 +13,10 @@ namespace ReserveIt
         {
             
         }
-        public override void OnConfiguring(DbContextOptionsBuilder builder)
+        protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
             //connection string
-            builder.UseSqlServer("connection string"); 
+            builder.UseSqlServer("Data Source=(localdb)\\mssqllocaldb;Initial Catalog=ResDb;Integrated Security=True;"); 
         }
         public virtual DbSet<Reservation> Reservations { get; set; }
         public virtual DbSet<ConferenceRoom> ConferenceRooms { get; set; }
