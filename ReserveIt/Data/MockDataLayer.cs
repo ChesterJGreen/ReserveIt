@@ -9,9 +9,9 @@ namespace ReserveIt.Data
 {
     public class MockDataLayer
     {
-        public static List<ConferenceRoom> GetConferenceRooms()
+        private static List<ConferenceRoom> result = new List<ConferenceRoom>();
+        public static void init()
         {
-            List<ConferenceRoom> result = new List<ConferenceRoom>();
             result.Add(
                 new ConferenceRoom()
 
@@ -28,23 +28,23 @@ namespace ReserveIt.Data
                     ResourceTimeZone = ResourceTimeZone.MST,
                     SeatingProvided = 50
 
-                }) ;
+                });
             result.Add(
                 new ConferenceRoom()
-            {
-                
-                Id = 2,
-                BuildingName = "Stella's",
-                Name = "Outdoor Patio",
-                Location = "Down-Town Nampa",
-                AvailableLectureDevices = new AssisstedLectureDevices[]
+                {
+
+                    Id = 2,
+                    BuildingName = "Stella's",
+                    Name = "Outdoor Patio",
+                    Location = "Down-Town Nampa",
+                    AvailableLectureDevices = new AssisstedLectureDevices[]
                 {
                     AssisstedLectureDevices.speakers,
                     AssisstedLectureDevices.microphone
                 },
-                ResourceTimeZone = ResourceTimeZone.MST,
-                SeatingProvided = 20
-            });
+                    ResourceTimeZone = ResourceTimeZone.MST,
+                    SeatingProvided = 20
+                });
             Reservation[] reservations = new Reservation[2];
             reservations[0] = new Reservation()
             {
@@ -61,13 +61,43 @@ namespace ReserveIt.Data
                 StartDateTime = DateTime.Now.AddHours(-1),
                 EndDateTime = DateTime.Now.AddHours(+1)
             };
+        }
+        public static List<ConferenceRoom> GetConferenceRooms()
+        {
+            
             return result;
         }
-        public Task<ConferenceRoom> CreateConferenceRoom(newConferenceRoom)
+        //TODO make the mockDataLayer process the Create/Put/Delete functionality
+        public static async Task<ConferenceRoom> CreateConferenceRoom(ConferenceRoom newConferenceRoom)
         {
-            List<ConferenceRoom> result = new List<ConferenceRoom>();
-            result.Add(new ConferenceRoom(newConferenceRoom));
-            return result;
+            var resultForId = result.ToArray();
+            int maxId = 0;
+
+            //foreach( ConferenceRoom room in resultForId)
+            //{
+            //    if (room.Id > maxId)
+            //    {
+            //        maxId = room.Id;
+            //    }
+               
+            //}
+
+            maxId = result.Max(room => room.Id);
+
+            result.Add(
+                new ConferenceRoom()
+
+                {
+                    Id = ++maxId,
+                    BuildingName = newConferenceRoom.BuildingName,
+                    Name = newConferenceRoom.Name,
+                    Location = newConferenceRoom.Location,
+                    AvailableLectureDevices = newConferenceRoom.AvailableLectureDevices,
+                    ResourceTimeZone = newConferenceRoom.ResourceTimeZone,
+                    SeatingProvided = newConferenceRoom.SeatingProvided
+
+                }) ;
+            return result.Single(room => room.Id == maxId);
         }
         
     }

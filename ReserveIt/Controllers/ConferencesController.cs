@@ -44,6 +44,7 @@ namespace ReserveIt.Controllers
                 return new JsonResult(BadRequest(ex));
             }
         }
+
         [HttpPut("{id}")]
         public async Task<JsonResult> EditConferenceRoom(int id, [FromBody] ConferenceRoom venue)
         {
@@ -53,8 +54,26 @@ namespace ReserveIt.Controllers
                 var roomInQuestion = rooms.SingleOrDefault(x => x.Id == id);
                 if (roomInQuestion == null)
                     return new JsonResult("Room is either not available or non-existant") { StatusCode = 404 };
-                ConferenceRoom conferenceRoomToEdit = await Data.MockDataLayer.EditConferenceRoom(venue);
+                ConferenceRoom conferenceRoomToEdit = await Data.MockDataLayer.EditConferenceRoom(id, venue);
                 return new JsonResult(conferenceRoomToEdit);
+            }
+            catch (Exception ex)
+            {
+
+                return new JsonResult(BadRequest(ex));
+            }
+        }
+        [HttpDelete("{id}")]
+        public async Task<JsonResult> DeleteConferenceRoom(int id)
+        {
+            try
+            {
+                var rooms = Data.MockDataLayer.GetConferenceRooms();
+                var roomInQuestion = rooms.SingleOrDefault(x => x.Id == id);
+                if (roomInQuestion == null)
+                    return new JsonResult("Room is either not available or non-existant") { StatusCode = 404 };
+                ConferenceRoom conferenceRoomToDelete = await Data.MockDataLayer.DeleteConferenceRoom(id);
+                return new JsonResult("Conference Room has been deleted.");
             }
             catch (Exception ex)
             {
