@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ReserveIt.Data;
 using ReserveIt.Models;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,24 @@ namespace ReserveIt.Controllers
     [ApiController]
     public class ConferencesController : ControllerBase
     {
-        [HttpGet("list")]
-        public JsonResult GetAllRooms()
+        private readonly ConferencesRepository _repository;
+        public ConferencesController(ConferencesRepository repository)
         {
-            return new JsonResult(Data.MockDataLayer.GetConferenceRooms());
+            _repository = repository;
+        }
+        [HttpGet("list")]
+        public async Task<JsonResult> GetAllRooms()
+        {
+            try
+            {
+                return new JsonResult(await _repository.GetConferenceRoomsAsync());
+            }
+            catch (Exception ex)
+            {
+
+                return new JsonResult(BadRequest(ex));
+            }
+            
         }
 
         [HttpGet("{id}/availability")]
@@ -35,7 +50,7 @@ namespace ReserveIt.Controllers
 
             try
             {
-                ConferenceRoom toBeCreated = await Data.MockDataLayer.CreateConferenceRoom(conferenceRoom);
+                ConferenceRoom toBeCreated = await Data.ResContext.Create(conferenceRoom);
                 return new JsonResult(toBeCreated);
             }
             catch (Exception ex)

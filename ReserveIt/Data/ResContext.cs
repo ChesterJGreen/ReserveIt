@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ReserveIt
+namespace ReserveIt.Data
 {
     public class ResContext : DbContext
     {
@@ -20,5 +20,11 @@ namespace ReserveIt
         }
         public virtual DbSet<Reservation> Reservations { get; set; }
         public virtual DbSet<ConferenceRoom> ConferenceRooms { get; set; }
+        public Task<ConferenceRoom> Create(ConferenceRoom newConferenceRoom)
+        {
+            var created = DbContext.Create(newConferenceRoom);
+            return created;
+        }
     }
+
 }
