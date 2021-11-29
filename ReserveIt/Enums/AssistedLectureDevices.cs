@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ReserveIt.Enums
 {
-    public enum AssisstedLectureDevices
+    public enum AssistedLectureDevices
     {
         projector,
         podium,

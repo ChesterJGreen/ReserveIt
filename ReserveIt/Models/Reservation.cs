@@ -11,5 +11,6 @@ namespace ReserveIt.Models
         public int ResourceId { get; set; }
         public DateTime StartDateTime { get; set; }
         public DateTime EndDateTime { get; set; }
+        public virtual ConferenceRoom ConferenceRoom { get; set; }
     }
 }

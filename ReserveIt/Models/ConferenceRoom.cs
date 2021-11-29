@@ -7,12 +7,12 @@ using ReserveIt.Enums;
 
 namespace ReserveIt.Models
 {
-    public class ConferenceRoom : Resource
+    public class ConferenceRoom : BaseResource
     {
         public string BuildingName { get; set; }
         public int SeatingProvided { get; set; }
         [NotMapped]
-        public IEnumerable<AssisstedLectureDevices> AvailableLectureDevices { get; set; }
+        public IEnumerable<AssistedLectureDevices> AvailableLectureDevices { get; set; }
         
 
 

@@ -45,12 +45,12 @@ namespace ReserveIt.Controllers
 
         }
         [HttpPost]
-        public async Task<JsonResult> CreateConferenceRoom([FromBody] ConferenceRoom conferenceRoom)
+        public  Task<JsonResult> CreateConferenceRoom([FromBody] ConferenceRoom conferenceRoom)
         {
 
             try
             {
-                ConferenceRoom toBeCreated = await Data.ResContext.Create(conferenceRoom);
+                ConferenceRoom toBeCreated = _repository.AddConference(conferenceRoom);
                 return new JsonResult(toBeCreated);
             }
             catch (Exception ex)

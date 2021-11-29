@@ -15,7 +15,7 @@ namespace ReserveIt.Data
         }
         public void AddConference(ConferenceRoom conference)
         {
-            _context.ConferenceRooms.Add(conference);
+           _context.ConferenceRooms.Add(conference);
         }
         public void RemoveConference(ConferenceRoom conference)
         {

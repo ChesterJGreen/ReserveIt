@@ -20,11 +20,7 @@ namespace ReserveIt.Data
         }
         public virtual DbSet<Reservation> Reservations { get; set; }
         public virtual DbSet<ConferenceRoom> ConferenceRooms { get; set; }
-        public Task<ConferenceRoom> Create(ConferenceRoom newConferenceRoom)
-        {
-            var created = DbContext.Create(newConferenceRoom);
-            return created;
-        }
+        
     }
 
 }

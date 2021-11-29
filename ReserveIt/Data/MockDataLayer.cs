@@ -9,26 +9,59 @@ namespace ReserveIt.Data
 {
     public class MockDataLayer
     {
+        public static void SeedEmptyDatabase()
+        {
+            ResContext context = new ResContext();
+
+            var room = new ConferenceRoom()
+            {
+                Name = "Blue Room",
+                ResourceType = Data.Reference.ResourceType.ConferenceRoom,
+                BuildingName = "Taco Bell Arena",
+                SeatingProvided = 30,
+                ResourceTimeZone = ResourceTimeZone.MST,
+                CreatedDate = DateTime.Now,
+                AvailableLectureDevices = new AssistedLectureDevices[]
+                {
+                    AssistedLectureDevices.microphone,
+                    AssistedLectureDevices.speakers,
+                    AssistedLectureDevices.podium
+                }
+            };
+            var room2 = new ConferenceRoom()
+            {
+                ResourceType = Data.Reference.ResourceType.ConferenceRoom,
+                BuildingName = "Nampa Public Library",
+                Name = "Lecture Hall",
+                AvailableLectureDevices = new AssistedLectureDevices[] {
+                    AssistedLectureDevices.projector,
+                    AssistedLectureDevices.microphone,
+                    AssistedLectureDevices.podium
+                },
+                ResourceTimeZone = ResourceTimeZone.MST,
+                SeatingProvided = 50,
+                CreatedDate = DateTime.Now.AddHours(-1)
+
+            };
+            var ef = context.ConferenceRooms.Add(room);
+            var ef2 = context.ConferenceRooms.Add(room2);
+
+            var res = context.Reservations.Add(new Reservation()
+            {
+                ConferenceRoom = room,
+                StartDateTime = DateTime.Now.AddHours(-1),
+                EndDateTime = DateTime.Now,
+
+            });
+            context.SaveChanges();
+        }
         private static List<ConferenceRoom> result = new List<ConferenceRoom>();
         public static void init()
         {
             result.Add(
                 new ConferenceRoom()
 
-                {
-                    Id = 1,
-                    BuildingName = "Nampa Public Library",
-                    Name = "Lecture Hall",
-                    Location = "Nampa",
-                    AvailableLectureDevices = new AssisstedLectureDevices[] {
-                    AssisstedLectureDevices.projector,
-                    AssisstedLectureDevices.microphone,
-                    AssisstedLectureDevices.podium
-                },
-                    ResourceTimeZone = ResourceTimeZone.MST,
-                    SeatingProvided = 50
-
-                });
+                );
             result.Add(
                 new ConferenceRoom()
                 {
@@ -37,10 +70,10 @@ namespace ReserveIt.Data
                     BuildingName = "Stella's",
                     Name = "Outdoor Patio",
                     Location = "Down-Town Nampa",
-                    AvailableLectureDevices = new AssisstedLectureDevices[]
+                    AvailableLectureDevices = new AssistedLectureDevices[]
                 {
-                    AssisstedLectureDevices.speakers,
-                    AssisstedLectureDevices.microphone
+                    AssistedLectureDevices.speakers,
+                    AssistedLectureDevices.microphone
                 },
                     ResourceTimeZone = ResourceTimeZone.MST,
                     SeatingProvided = 20
