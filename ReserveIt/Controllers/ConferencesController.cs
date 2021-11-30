@@ -18,17 +18,14 @@ namespace ReserveIt.Controllers
             _repository = repository;
         }
         [HttpGet("list")]
-        public async Task<JsonResult> GetAllRooms()
+        public  Task<JsonResult> GetAllRooms()
         {
-            try
-            {
-                return new JsonResult(await _repository.GetConferenceRoomsAsync());
-            }
-            catch (Exception ex)
-            {
+           
+               // Data.MockDataLayer.SeedEmptyDatabase();
+                return new JsonResult(Data.MockDataLayer.GetConferenceRooms());
+           
 
-                return new JsonResult(BadRequest(ex));
-            }
+            
             
         }
 
@@ -44,58 +41,58 @@ namespace ReserveIt.Controllers
 
 
         }
-        [HttpPost]
-        public  Task<JsonResult> CreateConferenceRoom([FromBody] ConferenceRoom conferenceRoom)
-        {
+        //[HttpPost]
+        //public  Task<JsonResult> CreateConferenceRoom([FromBody] ConferenceRoom conferenceRoom)
+        //{
 
-            try
-            {
-                ConferenceRoom toBeCreated = _repository.AddConference(conferenceRoom);
-                return new JsonResult(toBeCreated);
-            }
-            catch (Exception ex)
-            {
+        //    try
+        //    {
+        //        ConferenceRoom toBeCreated = _repository.AddConference(conferenceRoom);
+        //        return new JsonResult(toBeCreated);
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-                return new JsonResult(BadRequest(ex));
-            }
-        }
+        //        return new JsonResult(BadRequest(ex));
+        //    }
+        //}
 
-        [HttpPut("{id}")]
-        public async Task<JsonResult> EditConferenceRoom(int id, [FromBody] ConferenceRoom venue)
-        {
-            try
-            {
-                var rooms = Data.MockDataLayer.GetConferenceRooms();
-                var roomInQuestion = rooms.SingleOrDefault(x => x.Id == id);
-                if (roomInQuestion == null)
-                    return new JsonResult("Room is either not available or non-existant") { StatusCode = 404 };
-                ConferenceRoom conferenceRoomToEdit = await Data.MockDataLayer.EditConferenceRoom(id, venue);
-                return new JsonResult(conferenceRoomToEdit);
-            }
-            catch (Exception ex)
-            {
+        //[HttpPut("{id}")]
+        //public async Task<JsonResult> EditConferenceRoom(int id, [FromBody] ConferenceRoom venue)
+        //{
+        //    try
+        //    {
+        //        var rooms = Data.MockDataLayer.GetConferenceRooms();
+        //        var roomInQuestion = rooms.SingleOrDefault(x => x.Id == id);
+        //        if (roomInQuestion == null)
+        //            return new JsonResult("Room is either not available or non-existant") { StatusCode = 404 };
+        //        ConferenceRoom conferenceRoomToEdit = await Data.MockDataLayer.EditConferenceRoom(id, venue);
+        //        return new JsonResult(conferenceRoomToEdit);
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-                return new JsonResult(BadRequest(ex));
-            }
-        }
-        [HttpDelete("{id}")]
-        public async Task<JsonResult> DeleteConferenceRoom(int id)
-        {
-            try
-            {
-                var rooms = Data.MockDataLayer.GetConferenceRooms();
-                var roomInQuestion = rooms.SingleOrDefault(x => x.Id == id);
-                if (roomInQuestion == null)
-                    return new JsonResult("Room is either not available or non-existant") { StatusCode = 404 };
-                ConferenceRoom conferenceRoomToDelete = await Data.MockDataLayer.DeleteConferenceRoom(id);
-                return new JsonResult("Conference Room has been deleted.");
-            }
-            catch (Exception ex)
-            {
+        //        return new JsonResult(BadRequest(ex));
+        //    }
+        //}
+        //[HttpDelete("{id}")]
+        //public async Task<JsonResult> DeleteConferenceRoom(int id)
+        //{
+        //    try
+        //    {
+        //        var rooms = Data.MockDataLayer.GetConferenceRooms();
+        //        var roomInQuestion = rooms.SingleOrDefault(x => x.Id == id);
+        //        if (roomInQuestion == null)
+        //            return new JsonResult("Room is either not available or non-existant") { StatusCode = 404 };
+        //        ConferenceRoom conferenceRoomToDelete = await Data.MockDataLayer.DeleteConferenceRoom(id);
+        //        return new JsonResult("Conference Room has been deleted.");
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-                return new JsonResult(BadRequest(ex));
-            }
-        }
+        //        return new JsonResult(BadRequest(ex));
+        //    }
+        //}
     }
 
 }

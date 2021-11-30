@@ -43,21 +43,22 @@ namespace ReserveIt.Data
                 CreatedDate = DateTime.Now.AddHours(-1)
 
             };
-             var room3 = new ConferenceRoom()
-             {
-                 
-                 BuildingName = "Stella's",
-                 Name = "Outdoor Patio",
-                 AvailableLectureDevices = new AssistedLectureDevices[]
-                {
+            var room3 = new ConferenceRoom()
+            {
+
+                BuildingName = "Stella's",
+                Name = "Outdoor Patio",
+                AvailableLectureDevices = new AssistedLectureDevices[]
+               {
                     AssistedLectureDevices.speakers,
                     AssistedLectureDevices.microphone
-                },
-                 ResourceTimeZone = ResourceTimeZone.MST,
-                 SeatingProvided = 20
-             }
+               },
+                ResourceTimeZone = ResourceTimeZone.MST,
+                SeatingProvided = 20
+            };
             var ef = context.ConferenceRooms.Add(room);
             var ef2 = context.ConferenceRooms.Add(room2);
+            var ef3 = context.ConferenceRooms.Add(room3);
 
             var res = context.Reservations.Add(new Reservation()
             {
@@ -92,8 +93,6 @@ namespace ReserveIt.Data
             var rooms = GetConferenceRooms();
             return rooms.Single(x => x.Id == RoomId)?.Reservations;
         }
-       
-
-       
+                     
     }
 }

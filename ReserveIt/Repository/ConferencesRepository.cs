@@ -25,11 +25,11 @@ namespace ReserveIt.Data
         {
             return (await _context.SaveChangesAsync()) > 0;
         }
-        public async Task<ConferenceRoom[]> GetConferenceRoomsAsync()
-        {
+        //public  Task<ConferenceRoom[]> GetConferenceRoomsAsync()
+        //{
             
-            return await _context.ConferenceRooms.Find();
-        }
+        //    return  _context.ConferenceRooms.Find();
+        //}
 
 
     }
