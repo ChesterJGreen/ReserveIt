@@ -14,7 +14,7 @@ namespace ReserveIt
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
-            Data.MockDataLayer.SeedEmptyDatabase();
+            
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

@@ -18,11 +18,10 @@ namespace ReserveIt.Controllers
             _repository = repository;
         }
         [HttpGet("list")]
-        public  Task<JsonResult> GetAllRooms()
+        public JsonResult GetAllRooms()
         {
-           
-               // Data.MockDataLayer.SeedEmptyDatabase();
-                return new JsonResult(Data.MockDataLayer.GetConferenceRooms());
+
+                        return new JsonResult("it is finished!");
            
 
             
