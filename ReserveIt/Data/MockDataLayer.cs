@@ -43,6 +43,19 @@ namespace ReserveIt.Data
                 CreatedDate = DateTime.Now.AddHours(-1)
 
             };
+             var room3 = new ConferenceRoom()
+             {
+                 
+                 BuildingName = "Stella's",
+                 Name = "Outdoor Patio",
+                 AvailableLectureDevices = new AssistedLectureDevices[]
+                {
+                    AssistedLectureDevices.speakers,
+                    AssistedLectureDevices.microphone
+                },
+                 ResourceTimeZone = ResourceTimeZone.MST,
+                 SeatingProvided = 20
+             }
             var ef = context.ConferenceRooms.Add(room);
             var ef2 = context.ConferenceRooms.Add(room2);
 
@@ -53,96 +66,34 @@ namespace ReserveIt.Data
                 EndDateTime = DateTime.Now,
 
             });
-            context.SaveChanges();
-        }
-        private static List<ConferenceRoom> result = new List<ConferenceRoom>();
-        public static void init()
-        {
-            result.Add(
-                new ConferenceRoom()
-
-                );
-            result.Add(
-                new ConferenceRoom()
-                {
-
-                    Id = 2,
-                    BuildingName = "Stella's",
-                    Name = "Outdoor Patio",
-                    Location = "Down-Town Nampa",
-                    AvailableLectureDevices = new AssistedLectureDevices[]
-                {
-                    AssistedLectureDevices.speakers,
-                    AssistedLectureDevices.microphone
-                },
-                    ResourceTimeZone = ResourceTimeZone.MST,
-                    SeatingProvided = 20
-                });
-            Reservation[] reservations = new Reservation[2];
-            reservations[0] = new Reservation()
+            var res2 = context.Reservations.Add(new Reservation()
             {
-                Id = 1,
-                ResourceId = 1,
+                ConferenceRoom = room2,
                 StartDateTime = DateTime.Now.AddHours(-5),
                 EndDateTime = DateTime.Now.AddHours(-3)
-
-            };
-            reservations[1] = new Reservation()
+            });
+            var res3 = context.Reservations.Add(new Reservation()
             {
-                Id = 2,
-                ResourceId = 2,
+                ConferenceRoom = room3,
                 StartDateTime = DateTime.Now.AddHours(-1),
                 EndDateTime = DateTime.Now.AddHours(+1)
-            };
+            });
+            context.SaveChanges();
         }
-
-       
+                  
 
         public static List<ConferenceRoom> GetConferenceRooms()
         {
-            
-            return result;
+            ResContext context = new ResContext();
+            return context.ConferenceRooms.ToList();
         }
-        //TODO make the mockDataLayer process the Create/Put/Delete functionality
-        public static Task<ConferenceRoom> CreateConferenceRoom(ConferenceRoom newConferenceRoom)
+        public static IEnumerable<Reservation> GetReservationsForRooms(int RoomId)
         {
-            var resultForId = result.ToArray();
-            int maxId = 0;
-
-            //foreach( ConferenceRoom room in resultForId)
-            //{
-            //    if (room.Id > maxId)
-            //    {
-            //        maxId = room.Id;
-            //    }
-               
-            //}
-
-            maxId = result.Max(room => room.Id);
-
-            result.Add(
-                new ConferenceRoom()
-
-                {
-                    Id = ++maxId,
-                    BuildingName = newConferenceRoom.BuildingName,
-                    Name = newConferenceRoom.Name,
-                    Location = newConferenceRoom.Location,
-                    AvailableLectureDevices = newConferenceRoom.AvailableLectureDevices,
-                    ResourceTimeZone = newConferenceRoom.ResourceTimeZone,
-                    SeatingProvided = newConferenceRoom.SeatingProvided
-
-                }) ;
-            return Task.FromResult(result.Single(room => room.Id == maxId));
+            var rooms = GetConferenceRooms();
+            return rooms.Single(x => x.Id == RoomId)?.Reservations;
         }
-        internal static Task<ConferenceRoom> EditConferenceRoom(int id, ConferenceRoom venue)
-        {
-            throw new NotImplementedException();
-        }
+       
 
-        internal static Task<ConferenceRoom> DeleteConferenceRoom(int id)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }
