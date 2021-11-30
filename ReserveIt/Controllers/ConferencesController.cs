@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ReserveIt.Managers;
+using Microsoft.EntityFrameworkCore;
 
 namespace ReserveIt.Controllers
 {
@@ -12,86 +14,45 @@ namespace ReserveIt.Controllers
     [ApiController]
     public class ConferencesController : ControllerBase
     {
-        private readonly ConferencesRepository _repository;
-        public ConferencesController(ConferencesRepository repository)
+        private readonly ConferencesManager _manager;
+        public ConferencesController(ConferencesManager manager)
         {
-            _repository = repository;
+            _manager = manager;
         }
         [HttpGet("list")]
-        public JsonResult GetAllRooms()
+        public List<ConferenceRoom> GetAllRooms()
         {
-
-                        return new JsonResult("it is finished!");
-           
-
-            
-            
+            var conferenceRooms = _manager.GetAllRoomsReadOnly();
+            return conferenceRooms;
         }
 
         [HttpGet("{id}/availability")]
-        public JsonResult GetRoomAvailability(int id)
+        public IActionResult GetRoomAvailability(int id)
         {
-            var rooms = Data.MockDataLayer.GetConferenceRooms();
-            var roomInQuestion = rooms.SingleOrDefault(x => x.Id == id);
+            var room = _manager.GetRoom(id);
+            var roomInQuestion = room.Find(x => x.Id == id);
             if (roomInQuestion == null)
-                return new JsonResult("Room is either not available or non-existant") { StatusCode = 404 };
+                return BadRequest("Room is either not available or non-existant") ;
             var reservationToReturn = roomInQuestion.Reservations;
-            return new JsonResult(reservationToReturn);
-
-
+            return Ok(reservationToReturn);
         }
-        //[HttpPost]
-        //public  Task<JsonResult> CreateConferenceRoom([FromBody] ConferenceRoom conferenceRoom)
-        //{
-
-        //    try
-        //    {
-        //        ConferenceRoom toBeCreated = _repository.AddConference(conferenceRoom);
-        //        return new JsonResult(toBeCreated);
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        return new JsonResult(BadRequest(ex));
-        //    }
-        //}
-
-        //[HttpPut("{id}")]
-        //public async Task<JsonResult> EditConferenceRoom(int id, [FromBody] ConferenceRoom venue)
-        //{
-        //    try
-        //    {
-        //        var rooms = Data.MockDataLayer.GetConferenceRooms();
-        //        var roomInQuestion = rooms.SingleOrDefault(x => x.Id == id);
-        //        if (roomInQuestion == null)
-        //            return new JsonResult("Room is either not available or non-existant") { StatusCode = 404 };
-        //        ConferenceRoom conferenceRoomToEdit = await Data.MockDataLayer.EditConferenceRoom(id, venue);
-        //        return new JsonResult(conferenceRoomToEdit);
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        return new JsonResult(BadRequest(ex));
-        //    }
-        //}
-        //[HttpDelete("{id}")]
-        //public async Task<JsonResult> DeleteConferenceRoom(int id)
-        //{
-        //    try
-        //    {
-        //        var rooms = Data.MockDataLayer.GetConferenceRooms();
-        //        var roomInQuestion = rooms.SingleOrDefault(x => x.Id == id);
-        //        if (roomInQuestion == null)
-        //            return new JsonResult("Room is either not available or non-existant") { StatusCode = 404 };
-        //        ConferenceRoom conferenceRoomToDelete = await Data.MockDataLayer.DeleteConferenceRoom(id);
-        //        return new JsonResult("Conference Room has been deleted.");
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        return new JsonResult(BadRequest(ex));
-        //    }
-        //}
+        [HttpPost]
+        public IActionResult CreateConferenceRoom([FromBody] ConferenceRoom newConferenceRoom)
+        {
+            ConferenceRoom toBeCreated = _manager.CreateRoom(newConferenceRoom);
+            return Ok(toBeCreated);
+        }
+        [HttpPut("{id}")]
+        public IActionResult EditConferenceRoom([FromBody] int id, ConferenceRoom conferenceRoom)
+        {
+            ConferenceRoom toBeEdited = _manager.EditRoom(id, conferenceRoom);
+            return Ok(toBeEdited);
+        }
+        [HttpDelete("{id}")]
+        public void DeleteConferenceRoom(int id)
+        {
+            ConferenceRoom toBeDeleted = _manager.DeleteRoom(id);
+        }
     }
 
 }
