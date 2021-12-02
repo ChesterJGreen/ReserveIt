@@ -8,12 +8,15 @@ using System.Threading.Tasks;
 
 namespace ReserveIt.Managers
 {
-    public class ConferencesManager
+    public class ConferencesManager : IConferencesManager
     {
         private readonly ResContext _context;
-        public ConferencesManager(ResContext context)
+        private readonly IConferencesManager _manager;
+        
+        public ConferencesManager(ResContext context, IConferencesManager manager)
         {
             _context = context;
+            _manager = manager;
         }
         public List<ConferenceRoom> GetAllRoomsReadOnly()
         {
@@ -23,17 +26,17 @@ namespace ReserveIt.Managers
         {
             return _context.ConferenceRooms.Include(r => r.Reservations).Single(r => r.Id == id);
         }
-        public  ConferenceRoom CreateRoom(ConferenceRoom newConferenceRoom)
-        {
-            throw new NotImplementedException();
-        }
-        public ConferenceRoom EditRoom(int id, ConferenceRoom conferenceRoom)
-        {
-            throw new NotImplementedException();
-        }
-        public ConferenceRoom DeleteRoom(int id)
-        {
-            throw new NotImplementedException();
-        }
+        //public  ConferenceRoom CreateRoom(ConferenceRoom newConferenceRoom)
+        //{
+        //    throw new NotImplementedException();
+        //}
+        //public ConferenceRoom EditRoom(ConferenceRoom conferenceRoom)
+        //{
+        //    throw new NotImplementedException();
+        //}
+        //public ConferenceRoom DeleteRoom(int id)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

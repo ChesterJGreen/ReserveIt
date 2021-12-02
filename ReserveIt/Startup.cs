@@ -2,10 +2,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using ReserveIt.Data;
+using ReserveIt.Managers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +30,8 @@ namespace ReserveIt
         {
             services.AddControllers();
             services.AddRazorPages();
+            services.AddScoped<IConferencesManager, ConferencesManager>();
+            services.AddDbContext<ResContext>(options => options.UseSqlServer("name=ConnectionStrings:LocalDbConstr"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,6 +52,7 @@ namespace ReserveIt
             {
                 endpoints.MapControllers();
                 endpoints.MapRazorPages();
+                
             });
         }
     }
