@@ -11,10 +11,11 @@ namespace ReserveIt.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Description { get; set; }
         public DateTime CreatedDate { get; set; }
         public Data.Reference.ResourceType ResourceType { get; set; }
         public ResourceTimeZone ResourceTimeZone { get; set; }
         [ForeignKey("ResourceId")]
-        public virtual IEnumerable<Reservation> Reservations { get; set; }
+        public virtual IEnumerable<ReservationDto> ReservationDtos { get; set; }
     }
 }

@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ReserveIt.Managers;
+using ReserveIt.Models.Response;
+using ReserveIt.Utilities;
 
 namespace ReserveIt.Controllers
 {
@@ -30,8 +32,16 @@ namespace ReserveIt.Controllers
             var room = _manager.GetRoom(id);
             if (room == null)
                 return new JsonResult("Room is either not available or non-existant") { StatusCode = 404 };
-            var reservationToReturn = room.Reservations;
+            var reservationToReturn = room.ReservationDtos;
             return new JsonResult(reservationToReturn);
+        }
+        [HttpGet("{id}")]
+        public JsonResult GetSingleRoom(int id)
+        {
+            var room = _manager.GetRoom(id);
+            if (room == null) return new JsonResult("Room is either not available or non-existnant") { StatusCode = 404 };
+            SingleRoomResponse response = room.ConvertToResponseDto();
+            return new JsonResult(response);
         }
         //[HttpPost]
         //public IActionResult CreateConferenceRoom([FromBody] ConferenceRoom newConferenceRoom)
