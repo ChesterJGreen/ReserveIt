@@ -1,8 +1,8 @@
 ﻿namespace ReserveIt.Models.Response
 {
-    public class SingleRoomResponse
+    public class RoomDTO
     {
-        public SingleRoomResponse(ConferenceRoom resource)
+        public RoomDTO(ConferenceRoom resource)
         {
             Id = resource.Id;
             Name = resource.Name;
@@ -15,6 +15,5 @@
         
 
     }
-
-    
+       
 }

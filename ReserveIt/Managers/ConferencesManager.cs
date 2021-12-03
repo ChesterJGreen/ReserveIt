@@ -23,7 +23,7 @@ namespace ReserveIt.Managers
         }
         public ConferenceRoom GetRoom(int id)
         {
-            return _context.ConferenceRooms.Include(r => r.ReservationDtos).Single(r => r.Id == id);
+            return _context.ConferenceRooms.Include(r => r.Reservations).Single(r => r.Id == id);
         }
         //public  ConferenceRoom CreateRoom(ConferenceRoom newConferenceRoom)
         //{

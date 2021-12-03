@@ -16,6 +16,6 @@ namespace ReserveIt.Models
         public Data.Reference.ResourceType ResourceType { get; set; }
         public ResourceTimeZone ResourceTimeZone { get; set; }
         [ForeignKey("ResourceId")]
-        public virtual IEnumerable<ReservationDto> ReservationDtos { get; set; }
+        public virtual IEnumerable<ReservationResponse> ReservationDtos { get; set; }
     }
 }

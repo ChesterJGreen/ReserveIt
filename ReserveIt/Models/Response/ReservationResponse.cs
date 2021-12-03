@@ -5,9 +5,13 @@ using System.Threading.Tasks;
 
 namespace ReserveIt.Models
 {
-    public class ReservationDto
+    public class ReservationResponse
     {
-        public ReservationDto(Reservation reservation)
+        public ReservationResponse()
+        {
+
+        }
+        public ReservationResponse(Reservation reservation)
         {
             Id = reservation.Id;
             StartDateTime = reservation.StartDateTime;
@@ -20,5 +24,6 @@ namespace ReserveIt.Models
         public int ResourceId { get; set; }
         public DateTime StartDateTime { get; set; }
         public DateTime EndDateTime { get; set; }
+        public IEnumerable<Reservation> Reservations { get; set; }
     }
 }
