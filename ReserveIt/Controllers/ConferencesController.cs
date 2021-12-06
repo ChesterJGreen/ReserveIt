@@ -43,31 +43,7 @@ namespace ReserveIt.Controllers
             RoomDTO response = room.ConvertToResponseDto();
             return new JsonResult(response);
         }
-        //[HttpPost]
-        //public IActionResult CreateConferenceRoom([FromBody] ConferenceRoom newConferenceRoom)
-        //{
-        //    ConferenceRoom toBeCreated = _manager.CreateRoom(newConferenceRoom);
-        //    return Ok(toBeCreated);
-        //}
-        //[HttpPut("{id}")]
-        //public IActionResult EditConferenceRoom([FromBody] ConferenceRoom conferenceRoom)
-        //{
-        //    var room = _manager.GetRoom(conferenceRoom.Id);
-        //    if (room == null)
-        //    {
-        //        return BadRequest("room not found");
-        //    }    
-        //    ConferenceRoom toBeEdited = _manager.EditRoom(conferenceRoom);
-        //    return Ok(toBeEdited);
-        //}
-        //[HttpDelete("{id}")]
-        //public void DeleteConferenceRoom(int id)
-        //{
-        //    var room = _manager.GetRoom(id);
-        //    if (room == null)
-        //        BadRequest("Room Not Found");
-        //    ConferenceRoom toBeDeleted = _manager.DeleteRoom(id);
-        //}
+        
     }
    
 

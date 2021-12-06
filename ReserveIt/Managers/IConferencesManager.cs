@@ -10,9 +10,7 @@ namespace ReserveIt.Managers
     {
         public List<ConferenceRoom> GetAllRoomsReadOnly();
         public ConferenceRoom GetRoom(int id);
-        //public CreateRoom(conferenceRoom);
-        //public EditRoom(conferenceRoom);
-        //public DeleteRoom(conferenceRoom);
+        
 
     }
 }

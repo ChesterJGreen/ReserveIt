@@ -25,17 +25,6 @@ namespace ReserveIt.Managers
         {
             return _context.ConferenceRooms.Include(r => r.Reservations).Single(r => r.Id == id);
         }
-        //public  ConferenceRoom CreateRoom(ConferenceRoom newConferenceRoom)
-        //{
-        //    throw new NotImplementedException();
-        //}
-        //public ConferenceRoom EditRoom(ConferenceRoom conferenceRoom)
-        //{
-        //    throw new NotImplementedException();
-        //}
-        //public ConferenceRoom DeleteRoom(int id)
-        //{
-        //    throw new NotImplementedException();
-        //}
+      
     }
 }
