@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReserveIt.Data;
 
 namespace ReserveIt.Migrations
 {
     [DbContext(typeof(ResContext))]
-    partial class ResContextModelSnapshot : ModelSnapshot
+    [Migration("20211206152101_ReserveIt")]
+    partial class ReserveIt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,9 +30,6 @@ namespace ReserveIt.Migrations
 
                     b.Property<string>("BuildingName")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("LectureDevices")
-                        .HasColumnType("int");
 
                     b.Property<string>("Location")
                         .HasMaxLength(50)

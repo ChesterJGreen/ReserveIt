@@ -13,6 +13,7 @@ namespace ReserveIt
     {
         public static void Main(string[] args)
         {
+            Data.MockDataLayer.SeedEmptyDatabase();
             CreateHostBuilder(args).Build().Run();
             
         }
