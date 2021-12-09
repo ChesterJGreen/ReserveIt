@@ -1,3 +1,4 @@
+using ReserveIt.Models;
 using ReserveIt.Models.Response;
 using System;
 using Xunit;
@@ -26,9 +27,10 @@ namespace ReservationTesting
         
 
         [Fact]
-        public void GetRoom_NameIsNull()
+        public void GetRoom_NotNull()
         {
-            Assert.NotNull(_dto.Name);
+            
+            Assert.NotNull(_dto);
         }
         [Fact]
         public void GetRoom_IdExists()
@@ -42,5 +44,8 @@ namespace ReservationTesting
             _output.WriteLine($"Here is the Location {_dto.Location}");
             Assert.NotNull(_dto.Location);
         }
+        
+       
+        
     }
 }
