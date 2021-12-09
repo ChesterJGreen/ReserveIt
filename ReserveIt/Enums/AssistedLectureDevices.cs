@@ -29,4 +29,18 @@ namespace ReserveIt.Enums
         chalkboard,
         whiteboard
     }
+
+    public class DemoCode
+    {
+        public static void DeleteMe()
+        {
+            AssistedLectureDevices notAFlag = AssistedLectureDevices.chalkboard;
+            notAFlag = AssistedLectureDevices.podium;
+
+            notAFlag = AssistedLectureDevices.podium | AssistedLectureDevices.speakers;
+            // notAFlag is actually equal to podium (1) + speakers (2) = microphone (3)
+
+            bool isamic = notAFlag.HasFlag(AssistedLectureDevices.microphone);
+        }
+    }
 }

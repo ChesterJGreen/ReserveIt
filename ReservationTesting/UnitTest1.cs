@@ -1,19 +1,46 @@
 using ReserveIt.Models.Response;
 using System;
 using Xunit;
+using Xunit.Abstractions;
 
-namespace ReservationTesting
+namespace ReservationTesting 
 {
-    public class UnitTest1
+    public class UnitTest1 : IDisposable
     {
-        [Fact]
-        public void GetRoomIsNull()
+        private readonly RoomDTO _dto;
+        private readonly ITestOutputHelper _output;
+        public UnitTest1(ITestOutputHelper output)
         {
-            RoomDTO testRoom = new RoomDTO();
-            testRoom.Id = 1;
-            testRoom.Location = "Nampa, ID";
-            testRoom.Name = "Nampa Public Library";
-            Assert.Null(testRoom);
+            _output = output;
+            _dto = new RoomDTO();
+
+           
+            _dto.Id = -1;
+            _dto.Location = "Nampa, ID";
+            _dto.Name = "Nampa Public Library";
+        }
+        public void Dispose()
+        {
+            _output.WriteLine($"Disposing RoomDTO {_dto.Name}");
+        }
+        
+
+        [Fact]
+        public void GetRoom_NameIsNull()
+        {
+            Assert.NotNull(_dto.Name);
+        }
+        [Fact]
+        public void GetRoom_IdExists()
+        {
+            _output.WriteLine($"Here is the id {_dto.Id}");
+            Assert.IsType<int>(_dto.Id);
+        }
+        [Fact]
+        public void GetRoom_LocationExists()
+        {
+            _output.WriteLine($"Here is the Location {_dto.Location}");
+            Assert.NotNull(_dto.Location);
         }
     }
 }

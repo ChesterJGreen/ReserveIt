@@ -2,6 +2,10 @@
 {
     public class RoomDTO
     {
+        public RoomDTO()
+        {
+        }
+
         public RoomDTO(ConferenceRoom resource)
         {
             Id = resource.Id;
