@@ -1,6 +1,6 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 
 namespace ReserveIt
 {
@@ -32,6 +33,10 @@ namespace ReserveIt
             services.AddRazorPages();
             services.AddScoped<IConferencesManager, ConferencesManager>();
             services.AddDbContext<ResContext>(options => options.UseSqlServer("name=ConnectionStrings:LocalDbConstr"));
+            services.AddAutoMapper(config =>
+            {
+                Config.AutoMapperConfig.ConfigureAutoMapper(config);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,6 +59,10 @@ namespace ReserveIt
                 endpoints.MapRazorPages();
                 
             });
+        }
+        public void ConfigureAutoMapper()
+        {
+           
         }
     }
 }
