@@ -1,4 +1,6 @@
-﻿namespace ReserveIt.Models.Response
+﻿using System.Collections.Generic;
+
+namespace ReserveIt.Models.Response
 {
     public class RoomDTO
     {
@@ -17,7 +19,7 @@
         public string Name { get; set; }
         public string Location { get; set; }
         
-
+        public IEnumerable<string> AvailableLectureDevices { get; set; }
     }
        
 }

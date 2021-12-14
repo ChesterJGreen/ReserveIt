@@ -20,7 +20,7 @@ namespace ReserveIt.Data
         }
         public virtual DbSet<Reservation> Reservations { get; set; }
         public virtual DbSet<ConferenceRoom> ConferenceRooms { get; set; }
-        public virtual DbSet<ReservationResponse> ReservationDtos { get; set; }
+        public virtual DbSet<ReservationDTO> ReservationDtos { get; set; }
         
     }
 

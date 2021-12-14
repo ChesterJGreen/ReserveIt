@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 
 namespace ReserveIt.Models
 {
-    public class ReservationResponse
+    public class ReservationDTO
     {
-        public ReservationResponse()
+        public ReservationDTO()
         {
 
         }
-        public ReservationResponse(Reservation reservation)
+        public ReservationDTO(Reservation reservation)
         {
             Id = reservation.Id;
             StartDateTime = reservation.StartDateTime;

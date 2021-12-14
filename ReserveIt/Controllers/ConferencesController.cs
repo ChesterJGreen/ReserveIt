@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using ReserveIt.Managers;
 using ReserveIt.Models.Response;
 using ReserveIt.Utilities;
+using AutoMapper;
 
 namespace ReserveIt.Controllers
 {
@@ -15,14 +16,16 @@ namespace ReserveIt.Controllers
     public class ConferencesController : ControllerBase
     {
         private readonly IConferencesManager _manager;
-        public ConferencesController(IConferencesManager manager)
+        private readonly IMapper _mapper;
+        public ConferencesController(IConferencesManager manager, IMapper mapper)
         {
             _manager = manager;
+            _mapper = mapper;
         }
         [HttpGet("list")]
         public JsonResult GetAllRooms()
         {
-            var conferenceRooms = _manager.GetAllRoomsReadOnly();
+            var conferenceRooms = _mapper.Map<IEnumerable<RoomDTO>>(_manager.GetAllRoomsReadOnly());
             return new JsonResult(conferenceRooms);
         }
 
