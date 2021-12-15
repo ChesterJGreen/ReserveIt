@@ -43,7 +43,7 @@ namespace ReserveIt.Controllers
         {
             var room = _manager.GetRoom(id);
             if (room == null) return new JsonResult("Room is either not available or non-existnant") { StatusCode = 404 };
-            RoomDTO response = room.ConvertToResponseDto();
+            RoomDTO response = room.ConvertToResponseDto(_mapper);
             return new JsonResult(response);
         }
         

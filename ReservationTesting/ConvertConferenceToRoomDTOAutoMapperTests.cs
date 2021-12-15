@@ -1,6 +1,8 @@
 ﻿using ReserveIt.Models;
 using ReserveIt.Models.Response;
 using ReserveIt.Utilities;
+using System;
+using System.Collections.Generic;
 using Xunit;
 using static ReserveIt.Data.Reference;
 
@@ -8,9 +10,9 @@ namespace ReservationTesting
 {
     public class ConvertConferenceToRoomDTOAutoMapperTests
     {
-        private readonly ConferenceRoom[] conferenceRooms;
-        private readonly RoomDTO[] expectedDTOs;
-        private readonly AutoMapper.IMapper mapper;
+        private ConferenceRoom[] conferenceRooms;
+        private RoomDTO[] expectedDTOs;
+        private AutoMapper.IMapper mapper;
 
         public ConvertConferenceToRoomDTOAutoMapperTests()
         {
@@ -66,5 +68,81 @@ namespace ReservationTesting
 
             ValidateRoomDTO(expectedDTO, dto);
         }
+        [Fact]
+        public void SingleEmptyRoomObject()
+        {
+            var emptyRoom = new ConferenceRoom();
+
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                emptyRoom.ConvertToResponseDto(mapper);
+            });
+        }
+        [Fact]
+        public void SingleNullRoomObject()
+        {
+            ConferenceRoom nullRoom = null;
+
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+               nullRoom.ConvertToResponseDto(mapper);
+            });
+        }
+        [Fact]
+        public void CollectionNull()
+        {
+            IEnumerable<ConferenceRoom> nullCollection = null;
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                nullCollection.ConvertToResponseDto(mapper);
+            });
+        }
+        [Fact]
+        public void CollectionEmpty()
+        {
+            IEnumerable<ConferenceRoom> emptyCollection = new ConferenceRoom[0];
+            var result = emptyCollection.ConvertToResponseDto(mapper);
+
+            Assert.NotNull(result);
+            Assert.Empty(result);
+        }
+        [Fact]
+        public void CollectionOneRoom()
+        {
+            var oneRoom = new ConferenceRoom[] { conferenceRooms[0] };
+            var expectedDto = expectedDTOs[0];
+
+            var actualDto = oneRoom.ConvertToResponseDto(mapper);
+            var inspectorsForResult = new Action<RoomDTO>[]
+            {
+                new Action<RoomDTO>(dto => ValidateRoomDTO(expectedDto, dto))
+            };
+            Assert.NotNull(actualDto);
+            Assert.Collection<RoomDTO>(actualDto, inspectorsForResult);
+
+        }
+        [Fact]
+        public void CollecitonMultipleRooms()
+        {
+            var dto = conferenceRooms.ConvertToResponseDto(mapper);
+            List<Action<RoomDTO>> inspectorsForResult = new List<Action<RoomDTO>>();
+            foreach (var expectedDto in expectedDTOs)
+            {
+                inspectorsForResult.Add(
+                    new Action<RoomDTO>(dto => ValidateRoomDTO(expectedDto, dto)));
+
+            }
+
+            Assert.NotNull(dto);
+            Assert.Collection<RoomDTO>(dto, inspectorsForResult.ToArray());
+
+        }
+
+        [Fact]
+        public void BadMapShouldFail()
+        {
+            var room = conferenceRooms[0];
+            Assert.Throws<AutoMapper.AutoMapperMappingException>(() => mapper.Map<ReservationDTO>(room));
+                }
     }
 }
