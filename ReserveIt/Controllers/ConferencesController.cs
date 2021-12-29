@@ -8,6 +8,7 @@ using ReserveIt.Managers;
 using ReserveIt.Models.Response;
 using ReserveIt.Utilities;
 using AutoMapper;
+using ReserveIt.Models.Request;
 
 namespace ReserveIt.Controllers
 {
@@ -68,6 +69,19 @@ namespace ReserveIt.Controllers
             if (room == null) return new JsonResult("Room is either not available or non-existant") { StatusCode = 404 };
             RoomDTO response = room.ConvertToResponseDto(_mapper);
             return new JsonResult(response);
+        }
+        [HttpPatch("{id}")]
+
+        public IActionResult UpdateRoom(int id, ConferenceRoomUpdateRequest updateRequest)
+        {
+            var roomToUpdate = _manager.GetRoom(id);
+            if (roomToUpdate == null)
+            {
+                throw new Exception("No Room Found with that Id");
+            }
+            var returnedRoom = _manager.PatchRoom(roomToUpdate, updateRequest);
+
+            return Ok(returnedRoom);
         }
         
     }

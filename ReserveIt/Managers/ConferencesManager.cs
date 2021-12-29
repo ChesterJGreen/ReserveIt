@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ReserveIt.Data;
 using ReserveIt.Models;
+using ReserveIt.Models.Request;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +26,13 @@ namespace ReserveIt.Managers
         public ConferenceRoom GetRoom(int id)
         {
             return _context.ConferenceRooms.Include(r => r.Reservations).Single(r => r.Id == id);
+        }
+        internal ConferenceRoom PatchRoom([FromBody] ConferenceRoom original, [FromBody] ConferenceRoomUpdateRequest updateRoomRequest)
+        {
+            original.Name = updateRoomRequest.Name ??  original.Name;
+            original.Location = updateRoomRequest.Location ?? original.Location;
+            //I know I'm missing a step in here. I need to send the new object to the data table
+            return original;
         }
       
     }

@@ -1,4 +1,5 @@
 ﻿using ReserveIt.Models;
+using ReserveIt.Models.Request;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace ReserveIt.Managers
         /// <param name="id">the ID of the room</param>
         /// <returns>a <see cref="ConferenceRoom"/> model representing the room</returns>
         public ConferenceRoom GetRoom(int id);
+        public ConferenceRoom PatchRoom(ConferenceRoom room, ConferenceRoomUpdateRequest updateRequest);
         
 
     }
