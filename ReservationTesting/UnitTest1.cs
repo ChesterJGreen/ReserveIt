@@ -26,8 +26,8 @@ namespace ReservationTesting
         public UnitTest1(ITestOutputHelper output)
         {
             var testData = new ReservationTesting.TestData.Rooms();
-            var roomResources = testData.conferenceRooms;
-            var expectedDTOs = testData.expectedDTOs;
+            roomResources = testData.conferenceRooms;
+            expectedDTOs = testData.expectedDTOs;
 
             _mapper = ReserveIt.TestingCommon.AutoMapperTesting.GetMapper();
 

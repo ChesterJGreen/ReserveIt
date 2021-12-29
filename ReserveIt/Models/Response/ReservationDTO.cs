@@ -24,6 +24,6 @@ namespace ReserveIt.Models
         public int ResourceId { get; set; }
         public DateTime StartDateTime { get; set; }
         public DateTime EndDateTime { get; set; }
-        public IEnumerable<Reservation> Reservations { get; set; }
+        
     }
 }

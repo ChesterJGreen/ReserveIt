@@ -13,16 +13,15 @@ namespace ReserveIt.Utilities
         {
             if (room == null)
                 throw new ArgumentNullException("Conference Room", "The value passed for the room parameter is null.");
-            if (room.Id == null || room.Name == null || room.Location == null)
-                throw new ArgumentNullException("Conference Room", "A property of the room is incorrectly set to null.");
+           
             return new RoomDTO(room);
         }
         public static RoomDTO ConvertToResponseDto(this ConferenceRoom room, AutoMapper.IMapper mapper)
         {
             if (room == null)
                 throw new ArgumentNullException("Conference Room", "The value passed for the room parameter is null.");
-            if (room.Id == null || room.Name == null || room.Location == null)
-                throw new ArgumentNullException("Conference Room", "A property of the room is incorrectly set to null.");
+            
+               
 
             var roomDto = mapper.Map<RoomDTO>(room);
             return roomDto;
