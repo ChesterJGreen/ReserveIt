@@ -1,17 +1,19 @@
 ﻿using Xunit;
 using AutoMapper;
 using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace ReservationTesting
 {
-    public class AutoMapperConfigIsValid
+    public class AutoMapperTests
     {
         [Fact]
-        public void AutoMapperConfigurationIsValid()
+        public void AutoMapperConfigIsValid()
         {
-            var configuration = new AutoMapper.MapperConfiguration(
-                config => ReserveIt.Config.AutoMapperConfig.ConfigureAutoMapper(config)
-                );
+
+            var configuration = ReserveIt.TestingCommon.AutoMapperTesting.GetAutoMapperConfig();
+                
             configuration.AssertConfigurationIsValid();
         }
     }

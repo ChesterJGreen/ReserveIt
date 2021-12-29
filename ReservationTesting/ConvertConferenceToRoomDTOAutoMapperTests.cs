@@ -3,6 +3,7 @@ using ReserveIt.Models.Response;
 using ReserveIt.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 using static ReserveIt.Data.Reference;
 
@@ -132,6 +133,38 @@ namespace ReservationTesting
                     new Action<RoomDTO>(dto => ValidateRoomDTO(expectedDto, dto)));
 
             }
+
+            Assert.NotNull(dto);
+            Assert.Collection<RoomDTO>(dto, inspectorsForResult.ToArray());
+
+        }
+        public static IEnumerable<object[]> InvalidRooms
+        {
+            get
+            {
+                List<object[]> parametersForEachRunOfTheTest = new List<object[]>();
+                
+                parametersForEachRunOfTheTest.Add(new object[] { null });
+                parametersForEachRunOfTheTest.Add(new object[] { new ConferenceRoom() });
+                return parametersForEachRunOfTheTest;
+            }
+        }
+        [Theory]
+        [InlineData(null)]
+        [MemberData(nameof(InvalidRooms))]
+        [MemberData(nameof(InvalidRooms))]
+        public void CollectionMultipleWithInvalid(
+            ConferenceRoom invalidRoom)
+        {
+            List<ConferenceRoom> testRooms = conferenceRooms.ToList();
+            testRooms.Add(invalidRoom);
+
+            var dto = conferenceRooms.ConvertToResponseDto(mapper);
+
+            Action<RoomDTO>[] inspectorsForResult = new Action<RoomDTO>[2];
+
+            inspectorsForResult[0] = new Action<RoomDTO>(dto => ValidateRoomDTO(expectedDTOs[0], dto));
+            inspectorsForResult[1] = new Action<RoomDTO>(dto => ValidateRoomDTO(expectedDTOs[1], dto));
 
             Assert.NotNull(dto);
             Assert.Collection<RoomDTO>(dto, inspectorsForResult.ToArray());
