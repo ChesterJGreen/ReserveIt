@@ -37,7 +37,11 @@ namespace ReserveIt.Controllers
             var conferenceRooms = _mapper.Map<IEnumerable<RoomDTO>>(_manager.GetAllRoomsReadOnly());
             return new JsonResult(conferenceRooms);
         }
-
+        /// <summary>
+        /// gets all availability of a single room
+        /// </summary>
+        /// <param name="id">the room ID from the URL</param>
+        /// <returns>if available,returns the reservations for a specific room</returns>
         [HttpGet("{id}/availability")]
         public JsonResult GetRoomAvailability(int id)
         {
@@ -69,8 +73,15 @@ namespace ReserveIt.Controllers
             if (room == null) return new JsonResult("Room is either not available or non-existant") { StatusCode = 404 };
             RoomDTO response = room.ConvertToResponseDto(_mapper);
             return new JsonResult(response);
-        }
+        }/// <summary>
+        /// Allows changes to the ConferenceRoom. Name and Location only.
+        /// </summary>
+        /// <param name="id">the room Id from the Url</param>
+        /// <param name="updateRequest">the changes requested to make to the room properties</param>
+        /// <returns>if successful, returns the updated room</returns>
         [HttpPatch("{id}")]
+        [ProducesResponseType(Microsoft.AspNetCore.Http.StatusCodes.Status200OK)]
+        [ProducesResponseType(Microsoft.AspNetCore.Http.StatusCodes.Status400BadRequest)]
 
         public IActionResult UpdateRoom(int id, ConferenceRoomUpdateRequest updateRequest)
         {
@@ -82,6 +93,19 @@ namespace ReserveIt.Controllers
             var returnedRoom = _manager.PatchRoom(roomToUpdate, updateRequest);
 
             return Ok(returnedRoom);
+        }
+        /// <summary>
+        /// Removes a ConferenceRoom
+        /// </summary>
+        /// <param name="id">the id of the conferenceRoom to be deleted</param>
+        [HttpDelete("{id}")]
+        [ProducesResponseType(Microsoft.AspNetCore.Http.StatusCodes.Status200OK)]
+        [ProducesResponseType(Microsoft.AspNetCore.Http.StatusCodes.Status400BadRequest)]
+        public void RemoveRoom(int id)
+        {
+            var roomToDelete = _manager.GetRoom(id);
+            if (roomToDelete == null) throw new Exception("Room is either not available or non-existant");
+            _manager.RemoveRoom(roomToDelete);
         }
         
     }

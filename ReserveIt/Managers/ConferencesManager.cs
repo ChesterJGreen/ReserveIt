@@ -27,13 +27,22 @@ namespace ReserveIt.Managers
         {
             return _context.ConferenceRooms.Include(r => r.Reservations).Single(r => r.Id == id);
         }
-        internal ConferenceRoom PatchRoom([FromBody] ConferenceRoom original, [FromBody] ConferenceRoomUpdateRequest updateRoomRequest)
+        public ConferenceRoom PatchRoom([FromBody] ConferenceRoom original, [FromBody] ConferenceRoomUpdateRequest updateRoomRequest)
         {
             original.Name = updateRoomRequest.Name ??  original.Name;
             original.Location = updateRoomRequest.Location ?? original.Location;
             //I know I'm missing a step in here. I need to send the new object to the data table
+
+           _context.ConferenceRooms.Update(original);
+           _context.SaveChangesAsync();
             return original;
         }
-      
+        public void RemoveRoom(ConferenceRoom roomToDelete)
+        {
+
+            _context.ConferenceRooms.Remove(roomToDelete);
+            _context.SaveChangesAsync();
+            
+        }
     }
 }

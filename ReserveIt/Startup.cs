@@ -38,6 +38,8 @@ namespace ReserveIt
                 Config.AutoMapperConfig.ConfigureAutoMapper(config);
             });
             services.AddSwaggerGen();
+            services.AddAuthentication(Config.JwtTokenConfig.ConfigureJwtAuthentication)
+                .AddJwtBearer(options => Config.JwtTokenConfig.ConfigureJwtBearerTokens(options, Configuration));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +57,7 @@ namespace ReserveIt
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
