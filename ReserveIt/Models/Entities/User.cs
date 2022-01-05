@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ReserveIt.Managers
+namespace ReserveIt.Models
 {
     public class User
     {
+        public int Id { get; set; }
 
         [Required]
         [MaxLength(100)]
@@ -19,8 +20,9 @@ namespace ReserveIt.Managers
 
         [Required]
         [MaxLength(24)]
-        [MinLength(8, ErrorMessage = "You need a longer password.")]]
-        public string Password { get;set }
+        [MinLength(8, ErrorMessage = "You need a longer password.")]
+        public byte[] PasswordHash { get; set; }
+        public byte[] PasswordSalt { get; set; }
 
 
     }

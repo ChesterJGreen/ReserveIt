@@ -18,11 +18,11 @@ namespace ReserveIt.Controllers
     public class ConferencesController : ControllerBase
     {
         private readonly IConferencesManager _manager;
-        private readonly IMapper _mapper;
-        public ConferencesController(IConferencesManager manager, IMapper mapper)
+        
+        public ConferencesController(Config.BaseControllerDependencies dependencies, IConferencesManager manager) :base(dependencies)
         {
             _manager = manager;
-            _mapper = mapper;
+           
         }
 
 
@@ -34,7 +34,7 @@ namespace ReserveIt.Controllers
         [HttpGet("list")]
         public JsonResult GetAllRooms()
         {
-            var conferenceRooms = _mapper.Map<IEnumerable<RoomDTO>>(_manager.GetAllRoomsReadOnly());
+            var conferenceRooms = Mapper.Map<IEnumerable<RoomDTO>>(_manager.GetAllRoomsReadOnly());
             return new JsonResult(conferenceRooms);
         }
         /// <summary>
@@ -71,7 +71,7 @@ namespace ReserveIt.Controllers
         {
             var room = _manager.GetRoom(id);
             if (room == null) return new JsonResult("Room is either not available or non-existant") { StatusCode = 404 };
-            RoomDTO response = room.ConvertToResponseDto(_mapper);
+            RoomDTO response = room.ConvertToResponseDto(Mapper);
             return new JsonResult(response);
         }/// <summary>
         /// Allows changes to the ConferenceRoom. Name and Location only.

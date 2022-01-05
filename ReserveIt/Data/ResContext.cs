@@ -18,9 +18,14 @@ namespace ReserveIt.Data
             //connection string
             //builder.UseSqlServer("Data Source=(localdb)\\mssqllocaldb;Initial Catalog=ResDb;Integrated Security=True;"); 
         }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+
+        }
         public virtual DbSet<Reservation> Reservations { get; set; }
         public virtual DbSet<ConferenceRoom> ConferenceRooms { get; set; }
         public virtual DbSet<ReservationDTO> ReservationDtos { get; set; }
+        public virtual DbSet<User> Users { get; set; }
         
     }
 

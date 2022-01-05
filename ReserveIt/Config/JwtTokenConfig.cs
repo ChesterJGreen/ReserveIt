@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.DependencyInjection;
 using ReserveIt.Managers;
+using ReserveIt.Utilities.ConfigModels;
 
 namespace ReserveIt.Config
 {

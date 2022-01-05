@@ -5,11 +5,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using ReserveIt.Utilities.ConfigModels;
+using ReserveIt.Config;
 
 
 namespace ReserveIt.Controllers
 {
-    public class BaseController : Microsoft.AspNetCore.Mvc.ControllerBase
+    public class ControllerBase : Microsoft.AspNetCore.Mvc.ControllerBase
     {
         protected readonly IOptions<AppConfigModel> _appConfigOptions;
 
