@@ -19,7 +19,9 @@ namespace ReserveIt.Managers
             _context = resContext;
         }
 
-        public async Task<User> Authenticate(string username, string password)
+        public bool isThisTheClass() => true;
+
+        public virtual async Task<User> Authenticate(string username, string password)
         {
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
                 return null;

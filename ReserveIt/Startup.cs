@@ -40,6 +40,8 @@ namespace ReserveIt
             services.AddSwaggerGen();
             services.AddAuthentication(Config.JwtTokenConfig.ConfigureJwtAuthentication)
                 .AddJwtBearer(options => Config.JwtTokenConfig.ConfigureJwtBearerTokens(options, Configuration));
+            services.AddScoped<IUserService, UserServiceAllowAll>();
+            services.AddTransient<Config.BaseControllerDependencies>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

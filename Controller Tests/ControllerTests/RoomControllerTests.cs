@@ -19,6 +19,8 @@ namespace ReservationTesting.ControllerTests
         private List<ConferenceRoom> conferenceRooms;
         private List<RoomDTO> expectedDTOs;
 
+        private ReserveIt.Config.BaseControllerDependencies dependencies => new ReserveIt.Config.BaseControllerDependencies(_mapper, null);
+
         public RoomControllerTests()
         {
             var testData = new ReservationTesting.TestData.Rooms();                      
@@ -34,7 +36,7 @@ namespace ReservationTesting.ControllerTests
         public void GetSingleRoom_NotFoundResult()
         
         {
-            var controller = new ReserveIt.Controllers.ConferencesController(roomManager, _mapper);
+            var controller = new ReserveIt.Controllers.ConferencesController(dependencies, roomManager);
 
             var result = controller.GetSingleRoom(5);
 
@@ -49,7 +51,7 @@ namespace ReservationTesting.ControllerTests
         public void GetAllRooms_SuccessResult()
         {
             _mockRoomManager.Setup(mgr => mgr.GetAllRoomsReadOnly()).Returns(conferenceRooms);
-            var controller = new ReserveIt.Controllers.ConferencesController(roomManager, _mapper);
+            var controller = new ReserveIt.Controllers.ConferencesController(dependencies, roomManager);
 
             List<Action<RoomDTO>> inspectorsForResult = new List<Action<RoomDTO>>();
             foreach (var expectedDto in expectedDTOs)

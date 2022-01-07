@@ -18,9 +18,7 @@ namespace ReserveIt.Models
         [MaxLength(60)]
         public string Username { get; set; }
 
-        [Required]
-        [MaxLength(24)]
-        [MinLength(8, ErrorMessage = "You need a longer password.")]
+        
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
 

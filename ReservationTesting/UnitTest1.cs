@@ -18,9 +18,13 @@ namespace ReservationTesting
         private readonly ITestOutputHelper _output;
         private readonly Mock<IConferencesManager> _mockRoomManager;
         private readonly IMapper _mapper;
-        private IConferencesManager roomManager => _mockRoomManager.Object;
-        private List<ConferenceRoom> roomResources;
+        private IConferencesManager roomManager
+        {
+            get { return _mockRoomManager.Object; }
+        }
+        private List<ConferenceRoom> roomResources = new List<ConferenceRoom>();
         private List<RoomDTO> expectedDTOs;
+        private ReserveIt.Config.BaseControllerDependencies dependencies => new ReserveIt.Config.BaseControllerDependencies(_mapper, null);
 
         private IConferencesManager conferencesManager => _mockRoomManager.Object;
         public UnitTest1(ITestOutputHelper output)
@@ -28,7 +32,6 @@ namespace ReservationTesting
             var testData = new ReservationTesting.TestData.Rooms();
             roomResources = testData.conferenceRooms;
             expectedDTOs = testData.expectedDTOs;
-
             _mapper = ReserveIt.TestingCommon.AutoMapperTesting.GetMapper();
 
             _output = output;
@@ -66,8 +69,7 @@ namespace ReservationTesting
         [Fact]
         public void GetSingleRoomNotFoundResult()
         {
-           
-            var controller = new ConferencesController(_mockRoomManager.Object, null);
+            var controller = new ConferencesController(dependencies, _mockRoomManager.Object);
             var result = controller.GetSingleRoom(5);
 
             Assert.NotNull(result);
@@ -81,7 +83,7 @@ namespace ReservationTesting
         public void GetAllRooms_SuccessResult()
         {
             _mockRoomManager.Setup<List<ConferenceRoom>>(mgr => mgr.GetAllRoomsReadOnly()).Returns(roomResources);
-            var controller = new ConferencesController(roomManager, _mapper);
+            var controller = new ConferencesController(dependencies, roomManager);
 
             List<Action<RoomDTO>> inspectorsForResult = new List<Action<RoomDTO>>();
             foreach (var expectedDto in expectedDTOs)

@@ -27,6 +27,10 @@ namespace ReserveIt.Controllers
 
         public UsersController(Config.BaseControllerDependencies dependencies, IUserService userService) : base(dependencies)
         {
+            // the dependency injection container sees that you need something that implements IUserService - you are asking for IUserService
+            // .. the container has the instructions from AddScoped<IUserService, UserService> that it should instantiate the UserService class
+            // .. any time it is asked to fulfill the IUserService dependency
+            // it runs: IUserService userService = new UserService();
             _userService = userService;
             _tokenSettings = AppConfig.AuthTokenSettings;
         }
