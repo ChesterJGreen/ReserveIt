@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ReserveIt.Models
 {
@@ -23,5 +24,7 @@ namespace ReserveIt.Models
         public byte[] PasswordSalt { get; set; }
 
 
+        public virtual HashSet<UserRoleMapping> UserRoles { get; set; } = new HashSet<UserRoleMapping>();
+        public virtual HashSet<UserGroupMapping> UserGroups { get; set; } = new HashSet<UserGroupMapping>();
     }
 }

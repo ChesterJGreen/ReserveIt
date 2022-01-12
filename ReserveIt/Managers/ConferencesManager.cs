@@ -31,8 +31,6 @@ namespace ReserveIt.Managers
         {
             original.Name = updateRoomRequest.Name ??  original.Name;
             original.Location = updateRoomRequest.Location ?? original.Location;
-            //I know I'm missing a step in here. I need to send the new object to the data table
-
            _context.ConferenceRooms.Update(original);
            _context.SaveChangesAsync();
             return original;
