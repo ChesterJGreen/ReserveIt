@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ReserveIt.Models
 {
-    public class User
+    public class User : IUserInfo
     {
         public int Id { get; set; }
 

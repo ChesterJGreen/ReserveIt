@@ -29,6 +29,7 @@ namespace ReserveIt.Data
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Group> Groups { get; set; }
+        public virtual DbSet<ConsumerUser> Consumers { get; set; }
 
     }
 
