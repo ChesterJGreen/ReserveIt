@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using ReserveIt.Models.Entities;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace ReserveIt.Models

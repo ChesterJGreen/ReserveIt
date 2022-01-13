@@ -3,6 +3,7 @@ using ReserveIt.Models.Request;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ReserveIt.Managers
@@ -57,5 +58,7 @@ namespace ReserveIt.Managers
         /// <param name="id"></param>
         /// <returns>true if the user exists and was deleted; false if the user does not exist</returns>
         Task<bool> Delete(int id);
+
+        List<Claim> BuildUserClaims(User user);
     }
 }

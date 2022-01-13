@@ -20,6 +20,7 @@ namespace ReserveIt.Controllers
 {
     [Route("api/users")]
     [ApiController]
+    [Authorize(Roles = "registered-role")]
     public class UsersController : ControllerBase
     {
         private IUserService _userService;
@@ -46,6 +47,7 @@ namespace ReserveIt.Controllers
                 return BadRequest(new { message = "Username or password is incorrect" });
             }
 
+            var buildUserClaims = _userService.BuildUserClaims(user);
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = System.Text.Encoding.ASCII.GetBytes(_tokenSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -111,6 +113,8 @@ namespace ReserveIt.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "res-admin")]
+
         public async Task<IActionResult> Update(int id, [FromBody] UserAddUpdateRequest model)
         {
             var user = Mapper.Map<User>(model);

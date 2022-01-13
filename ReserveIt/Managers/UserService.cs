@@ -7,6 +7,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ReserveIt.Models;
+using System.Security.Claims;
+using ReserveIt.Models.Entities;
 
 namespace ReserveIt.Managers
 {
@@ -25,14 +27,27 @@ namespace ReserveIt.Managers
         {
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
                 return null;
-            var user = await _context.Users.SingleOrDefaultAsync(x => x.Username == username);
+            //var user = await _context.Users.SingleOrDefaultAsync(x => x.Username == username);
+            var user = await GetByUsernameWithAccessControl(username);
 
             if (user == null)
                 return null;
             if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
                 return null;
 
+            _ = _context.Roles.ToHashSet();
+            _ = _context.Groups.Include(group => group.GroupRoleMappings).ToHashSet();
+
             return user;
+        }
+
+        public async Task<User> GetByUsernameWithAccessControl(string username)
+        {
+            return await _context.Users
+                .Include(user => user.UserRoles)
+                .Include(user => user.UserGroups)
+                .SingleOrDefaultAsync(user => user.Username == username);
+            
         }
 
         public async Task<User> Create(UserAddUpdateRequest request) =>
@@ -112,7 +127,23 @@ namespace ReserveIt.Managers
             await _context.SaveChangesAsync();
 
         }
-        
+        public List<Claim> BuildUserClaims(User user)
+        {
+            List<Claim> claims = new List<Claim>();
+            claims.Add(new Claim(ClaimTypes.Name, user.Id.ToString()));
+
+            var userRoles = user.UserRoles.Select(map => map.Role);
+            var userRoleClaims = userRoles.Select(role => new Claim(ClaimTypes.Role, role.Name));
+            IEnumerable<GroupRoleMapping> userGroupRoleMappings = user.UserGroups.SelectMany(map => map.Group.GroupRoleMappings);
+
+            var userGroupRoleClaims = userGroupRoleMappings.Select(map => map.Role).Select(role => new Claim(ClaimTypes.Role, role.Name));
+
+            claims.AddRange(userRoleClaims);
+            claims.AddRange(userGroupRoleClaims);
+
+            return claims;
+        }
+
         #region Private Static Methods
         private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
@@ -144,6 +175,7 @@ namespace ReserveIt.Managers
 
             
         }
+
         #endregion
     }
 }
