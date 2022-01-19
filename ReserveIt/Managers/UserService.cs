@@ -143,7 +143,52 @@ namespace ReserveIt.Managers
 
             return claims;
         }
+        /// <summary>
+        /// update a user's username
+        /// </summary>
+        /// <param name="userId">the user ID to operate on</param>
+        /// <param name="username">the new username</param>
+        /// <returns>true if successful; otherwise, false</returns>
+        public async Task<bool> UpdateUsername(int userId, string username)
+        {
+            var user = await _context.Users.FindAsync(userId);
 
+            if (user == null)
+                return false;
+
+            if (user.Username == username)
+                return true;
+
+            if (await IsUsernameTaken(username))
+                return false;
+
+            user.Username = username;
+            await _context.SaveChangesAsync();
+            return true;
+
+        }
+        public async Task<bool> UpdateFirstLastName(int userId, string firstName, string lastName)
+        {
+            var user = await _context.Users.FindAsync(userId);
+
+            if (user == null)
+                return false;
+            if (string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName))
+                return false;
+
+            user.FirstName = firstName;
+            user.LastName = lastName;
+            await _context.SaveChangesAsync();
+            return true;
+        }   
+        private async Task<bool> IsUsernameTaken(string username)
+        {
+            if (string.IsNullOrWhiteSpace(username))
+                return true;
+
+            bool alreadyExists = await _context.Users.AsNoTracking().AnyAsync(x => x.Username == username);
+            return alreadyExists;
+        }
         #region Private Static Methods
         private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {

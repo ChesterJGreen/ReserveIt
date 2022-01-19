@@ -60,5 +60,9 @@ namespace ReserveIt.Managers
         Task<bool> Delete(int id);
 
         List<Claim> BuildUserClaims(User user);
+
+        Task<bool> UpdateUsername(int userId, string username);
+
+        Task<bool> UpdateFirstLastName(int userId, string firstName, string lastName);
     }
 }

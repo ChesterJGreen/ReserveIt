@@ -29,10 +29,12 @@ namespace ReserveIt.Models.Entities
             get { return AuthenticatedUser.Username; }
             set { AuthenticatedUser.Username = value; }
         }
-        [MaxLength(50)]
-        public string Location { get; set; }
+        [MaxLength(50), Required]
+        public string Location { get; set; } = String.Empty;
         public bool IsMembershipActive { get; set; } = false;
-        public string MembershipLevel { get; set; }
+        [MaxLength(50), Required]
+        public string MembershipLevel { get; set; } = String.Empty;
+        
         public int TotalRewardPoints { get; set; } = 0;
 
 

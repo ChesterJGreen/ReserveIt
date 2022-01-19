@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ReserveIt.Models.Entities
+namespace ReserveIt.Models.Interfaces
 {
     public class IUserInfo
     {

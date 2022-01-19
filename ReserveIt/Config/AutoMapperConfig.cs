@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ReserveIt.Enums;
 using ReserveIt.Models;
+using ReserveIt.Models.Entities;
 using ReserveIt.Models.Request;
 using ReserveIt.Models.Response;
 using System;
@@ -26,6 +27,7 @@ namespace ReserveIt.Config
             configureMe.CreateMap<Reservation, ReservationDTO>();
             configureMe.CreateMap<ConferenceRoom, RoomDTO>();
             configureMe.CreateMap<User, UserResponseModel>();
+            configureMe.CreateMap<ConsumerUser, ConsumerDTO>();
 
             //TODO: discuss the pros and cons of this approach
             configureMe.CreateMap<UserAddUpdateRequest, User>(MemberList.Source)
